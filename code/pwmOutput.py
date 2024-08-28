@@ -3,7 +3,7 @@ import mediapipe as mp
 from gpiozero import PWMLED
 import math
 
-led = PWMLED(14)
+led = PWMLED(15)
 mp_face = mp.solutions.face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5)
 cap = cv2.VideoCapture(0)
 width = 640
@@ -15,29 +15,19 @@ def obj_data(img):
     results = mp_face.process(image_input)
     if not results.detections:
         print("NO FACE")
-        #led.value = 0.05
+        led.value = 0.0
         return None, None  # Return None for both width*height and x-coordinate
     else:
         for detection in results.detections:
             bbox = detection.location_data.relative_bounding_box
-            x, y, w, h = int(bbox.xmin * width), int(bbox.ymin * height), int(bbox.width * width), int(
-                bbox.height * height)
+            x, y, w, h = int(bbox.xmin * width), int(bbox.ymin * height), int(bbox.width * width), int(bbox.height * height)
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            #led.value = 1
             # Calculate the x-coordinate of the center of the face
             center_x = x + w // 2
             return w * h, center_x
 
-
 def pixels_to_meters(area):
-    # This function is just a placeholder, without camera calibration,
-    # we can't accurately convert pixel values to meters.
-    # You would need camera calibration parameters and a depth map for accurate distance estimation.
-    # This function could be replaced with a calibrated conversion if available.
-    # For now, we'll return a rough estimate based on assumptions.
-    # For example, assuming an average face size of 0.15 square meters at 1 meter distance
-    return 267.14*math.pow(area,-0.612)
-
+    return 267.14 * math.pow(area, -0.612)
 
 while True:
     ret, frame = cap.read()
@@ -50,13 +40,24 @@ while True:
     if obj_size is not None:
         distance_meters = pixels_to_meters(obj_size)
         if center_x is not None:
-            # Calculate the distance from the centerline
+            # Set LED brightness based on the distance to the face
+            if distance_meters < 1:
+                led.value = 0.2
+            elif 1 <= distance_meters <= 1.5:
+                led.value = 0.5
+            elif distance_meters > 2:
+                led.value = 1
+            else:
+                led.value = 0.05  # Default value when no condition is met
+
+            # Display distance and x distance from the centerline
             x_distance = abs(center_x - width // 2)
             print(f"Distance to Face: {distance_meters:.2f} meters, X Distance from Center: {x_distance} pixels")
             cv2.putText(frame, f"Distance to Face: {distance_meters:.2f} meters", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
                         (255, 0, 0), 2)
             cv2.putText(frame, f"X Distance from Center: {x_distance} pixels", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1,
                         (255, 0, 0), 2)
+    
     cv2.imshow("FRAME", frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
