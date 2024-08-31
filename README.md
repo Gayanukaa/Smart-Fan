@@ -23,7 +23,7 @@ The goal of this project is to fuse modern sensing technology with everyday appl
 
 ## Documentation
 
-The block diagram above illustrates how the components of the Smart Table Fan system interact:
+The block diagram below illustrates how the components of the Smart Table Fan system interact:
 
 <img src="proposal\block diagram.png"></img>
 
@@ -42,6 +42,37 @@ To explore the project, please follow these steps:
  2) Install the necessary software and packages.
  3) Connect the hardware components as per the block diagram.
  4) Run the LabVIEW interface to start the fan and monitor its operations.
+
+## LabVIEW Control⚙️
+
+LabVIEW processes all three system inputs from the sensors to adjust the fan speed, maintains the connection with the programmable DC power supply, and integrates a dashboard to monitor real-time data and system status.
+
+<table style="width: 100%; border-collapse: collapse;">
+  <tr>
+    <td style="padding: 0;" colspan="3">
+      <img src="images/interface.png" alt="Image 1" style="width: 100%; display: block;">
+     <p align="center">Dashboard displaying real-time temperature, humidity data, and indication bulbs for system status.</p>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding: 0;">
+     <img src="images/main vi.png" alt="Image 2" style="width: 100%; display: block;">
+     <p align="center"> Main vi of the system</p>
+    </td>
+    <td style="padding: 0;">
+     <img src="images/power supply connection.png" alt="Image 3" style="width: 100%; display: block;">
+     <p align="center"> Connection with the programmable DC supply</p>
+    </td>
+    <td style="padding: 0;">
+     <img src="images/fan speed regulation.png" alt="Image 4" style="width: 100%; display: block;">
+     <p align="center"> Varying the speed of the fan</p>
+    </td>
+  </tr>
+</table>
+
+
+
+
 
 ## Contributing🤝
 We welcome contributions from individuals and teams interested in further developing this project. Potential areas include:
