@@ -26,24 +26,22 @@ left_80 = 11
 print("begin test")
 
 
-print("duty cycle",right, "% at right +90 deg")
+print("duty cycle",right, "% at right +60 deg")
 pwm.ChangeDutyCycle(left_60)
 sleep(1)
 
-
-print("duty cycle",right, "% at right +90 deg")
+print("duty cycle",right, "% at right -60 deg")
 pwm.ChangeDutyCycle(right_60)
 sleep(1)
-print("duty cycle",right, "% at right +90 deg")
+print("duty cycle",right, "% at right +60 deg")
 pwm.ChangeDutyCycle(left_60)
 sleep(1)
 
-
-print("duty cycle",right, "% at right +90 deg")
+print("duty cycle",right, "% at right -60 deg")
 pwm.ChangeDutyCycle(right_60)
 sleep(1)
 
-print("duty cycle",right, "% at right +90 deg")
+print("duty cycle",right, "% at right +60 deg")
 pwm.ChangeDutyCycle(neutral)
 sleep(1)
 
@@ -51,7 +49,6 @@ print("end of test")
 
 pwm.stop()
 GPIO.cleanup()
-
 
 #30 - 4.5,9.5
 #54 - 5.5, 10.5

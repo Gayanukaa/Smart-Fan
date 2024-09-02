@@ -53,36 +53,35 @@ def set_servo_angle(duty_cycle):
 while True:
     ret, frame = cap.read()
     frame = cv2.resize(frame, (640, 480))
-    
+
     cv2.line(frame, (width // 2, 0), (width // 2, height), (255, 0, 0), 2)
-    
+
     face_centers = obj_data(frame)
     if face_centers:
         for i in range(len(face_centers)):
             for j in range(i + 1, len(face_centers)):
                 dist = distance(face_centers[i][0], face_centers[i][1], face_centers[j][0], face_centers[j][1])
                 cv2.line(frame, (face_centers[i][0], face_centers[i][1]), (face_centers[j][0], face_centers[j][1]), (0, 255, 0), 2)
-        
+
         leftmost = min(face_centers, key=lambda p: p[0])
         rightmost = max(face_centers, key=lambda p: p[0])
-        
+
         left_right_distance = distance(leftmost[0], leftmost[1], rightmost[0], rightmost[1])
-        
+
         if left_right_distance > 0:
             left_right_distance_meters = pixels_to_meters(left_right_distance)
             cv2.line(frame, (leftmost[0], leftmost[1]), (rightmost[0], rightmost[1]), (255, 0, 0), 2)
             cv2.putText(frame, f"Left to Right Distance: {left_right_distance_meters:.2f} m", (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1,(255, 0, 0), 2)
-                        
+
             # Calculate duty cycle based on the range of faces detected
             face_range = rightmost[0] - leftmost[0]
             if face_range > 0:
                 duty_cycle = left_duty_cycle + (right_duty_cycle - left_duty_cycle) * (rightmost[0] - leftmost[0]) / width
                 set_servo_angle(duty_cycle)
-        
-        # Find the face with the smallest area (farthest person)
+
         farthest_face = min(face_centers, key=lambda p: p[2])
         farthest_distance_meters = pixels_to_meters(farthest_face[2])
-        
+
         # Display distance to the farthest person
         cv2.putText(frame, f"Distance to Farthest Face: {farthest_distance_meters:.2f} m", (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1,
                     (255, 0, 0), 2)
@@ -94,7 +93,7 @@ while True:
         for angle in range(90, -91, -10):
             duty_cycle = neutral_duty_cycle + angle / 180 * (right_duty_cycle - left_duty_cycle)
             set_servo_angle(duty_cycle)
-    
+
     cv2.imshow("FRAME", frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break

@@ -30,13 +30,7 @@ def obj_data(img):
 
 
 def pixels_to_meters(area):
-    # This function is just a placeholder, without camera calibration,
-    # we can't accurately convert pixel values to meters.
-    # You would need camera calibration parameters and a depth map for accurate distance estimation.
-    # This function could be replaced with a calibrated conversion if available.
-    # For now, we'll return a rough estimate based on assumptions.
-    # For example, assuming an average face size of 0.15 square meters at 1 meter distance
-    return 100000/area 
+    return 100000/area
 
 
 while True:

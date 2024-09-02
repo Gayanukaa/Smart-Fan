@@ -16,13 +16,12 @@ def obj_data(img):
     if not results.detections:
         print("NO FACE")
         led.value = 0.0
-        return None, None  # Return None for both width*height and x-coordinate
+        return None, None
     else:
         for detection in results.detections:
             bbox = detection.location_data.relative_bounding_box
             x, y, w, h = int(bbox.xmin * width), int(bbox.ymin * height), int(bbox.width * width), int(bbox.height * height)
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            # Calculate the x-coordinate of the center of the face
             center_x = x + w // 2
             return w * h, center_x
 
@@ -32,10 +31,9 @@ def pixels_to_meters(area):
 while True:
     ret, frame = cap.read()
     frame = cv2.resize(frame, (640, 480))
-    
-    # Draw imaginary centerline
+
     cv2.line(frame, (width // 2, 0), (width // 2, height), (255, 0, 0), 2)
-    
+
     obj_size, center_x = obj_data(frame)
     if obj_size is not None:
         distance_meters = pixels_to_meters(obj_size)
@@ -50,14 +48,13 @@ while True:
             else:
                 led.value = 0.05  # Default value when no condition is met
 
-            # Display distance and x distance from the centerline
             x_distance = abs(center_x - width // 2)
             print(f"Distance to Face: {distance_meters:.2f} meters, X Distance from Center: {x_distance} pixels")
             cv2.putText(frame, f"Distance to Face: {distance_meters:.2f} meters", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
                         (255, 0, 0), 2)
             cv2.putText(frame, f"X Distance from Center: {x_distance} pixels", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1,
                         (255, 0, 0), 2)
-    
+
     cv2.imshow("FRAME", frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
