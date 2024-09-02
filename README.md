@@ -5,7 +5,7 @@
 
 ## Introduction
 
-This project introduces a Smart Fan, which intelligently adapts its rotation and speed based on real-time environmental data and user presence. The system leverages conputer vision for distance measurement and rotation angle to optimize airflow, enhancing user comfort while conserving energy.
+This project introduces a Smart Fan, which intelligently adapts its rotation and speed based on real-time environmental data and user presence. The system leverages computer vision for distance measurement and rotation angle to optimize airflow, enhancing user comfort while conserving energy.
 
 ## Project Philosophy
 
