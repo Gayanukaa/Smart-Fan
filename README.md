@@ -1,11 +1,15 @@
 # Smart-Fan
-### Smart Table Fan: Adaptive Comfort with Intelligent Environmental Sensing
+### Smart Fan: Adaptive Comfort with Intelligent Environmental Sensing
+
+<img src="images\cover image.png"></img>
 
 ## Introduction
-This project introduces a Smart Table Fan, which intelligently adapts its rotation and speed based on real-time environmental data and user presence. The system leverages face detection and distance measurement to optimize airflow, enhancing user comfort while conserving energy.
+
+This project introduces a Smart Fan, which intelligently adapts its rotation and speed based on real-time environmental data and user presence. The system leverages conputer vision for distance measurement and rotation angle to optimize airflow, enhancing user comfort while conserving energy.
 
 ## Project Philosophy
-The goal of this project is to fuse modern sensing technology with everyday appliances, creating smart systems that respond dynamically to environmental changes. By utilizing computer vision and data acquisition technologies, this Smart Table Fan offers an innovative approach to personalized comfort and energy efficiency.
+
+The goal of this project is to fuse modern sensing technology creating smart systems that respond dynamically to environmental changes. By utilizing computer vision and data acquisition technologies with sensors(one custom built) and actuators, this Smart Fan offers an innovative approach to personalized comfort and energy efficiency.
 
 ## Tech Stack
 
@@ -14,22 +18,23 @@ The goal of this project is to fuse modern sensing technology with everyday appl
 [![MediaPipe](https://img.shields.io/badge/MediaPipe-orange?logo=google&logoColor=white)](https://google.github.io/mediapipe/)
 [![LabVIEW](https://img.shields.io/badge/LabVIEW-yellow?logo=ni-labview&logoColor=white)](https://www.ni.com/en-us/shop/labview.html)
 [![Debian](https://img.shields.io/badge/Debian-red?logo=debian&logoColor=white)](https://www.debian.org/)
+
 ## Features
-- **Smart Rotation**: Utilizes face detection to adjust the fan's rotation angle based on user location within a 5-meter range.
 - **Distance-Based Speed Control**: Generates PWM signals based on the user's distance, enabling precise fan speed adjustments.
+- **Adaptive Rotation**: The fan adjusts its rotation angle based on user location within a 4-meter range.
 - **Environmental Sensing**: Monitors and adjusts fan operation based on temperature and humidity.
 - **User-Friendly Interface**: Provides manual control through LabVIEW for customizable settings.
 - **Energy Efficiency**: Reduces energy consumption by dynamically adjusting fan operations.
 
 ## Documentation
 
-The block diagram below illustrates how the components of the Smart Table Fan system interact:
+The block diagram below illustrates how the components of the Smart Fan system interact:
 
-<img src="proposal\block diagram.png"></img>
+<img src="images\block diagram.png"></img>
 
 - **Raspberry Pi**: Processes video input from the webcam for face detection using OpenCV and MediaPipe, calculates distance, and controls the fan's rotation angle.
-- **Webcam**: Captures real-time video to detect user presence and measure distance.
-- **LabVIEW**: Integrates data from sensors and controls the system, managing fan speed and rotation.
+- **Webcam**: Captures real-time video to detect user presence.
+- **LabVIEW**: Integrates data from sensors and controls the system, managing fan speed.
 - **Servo Motor**: Adjusts the fan's direction based on the user's position.
 - **DC Motor**: Modulates fan speed according to PWM signals from the Raspberry Pi and power supply controlled by LabVIEW.
 - **NI DAQ mx**: Acquires data from various sensors and actuators, providing real-time feedback to the LabVIEW interface.
@@ -37,10 +42,10 @@ The block diagram below illustrates how the components of the Smart Table Fan sy
 
 ## Distance Estimation and Servo Control
 
-The system uses a Mediapipe model for face detection, and OpenCV for processing the video feed from the webcamera connected to the Raspberry Pi.
+The system uses a **Mediapipe** model for face detection, and **OpenCV** for processing the video feed from the webcamera connected to the Raspberry Pi.
 
 - Face Detection: The algorithm detects faces in real-time, drawing bounding boxes around them.
-- Distance Measurement The area of the bounding box is used to estimate the distance to the face and angles.
+- Distance Measurement: The area of the bounding box is used to estimate the distance to the face and angles.
 
 Here is a brief snippet of the core logic for face detection and servo control:
 
@@ -131,8 +136,7 @@ face_centers = obj_data(frame)
         pwm_servo.start(0)
 ```
 
-
-## LabVIEW Control⚙
+## LabVIEW Control
 
 LabVIEW processes all three sensor inputs using the NI DAQ mx to adjust the fan speed, maintains the connection with the programmable DC power supply, and integrates a dashboard to monitor real-time data and system status.
 
@@ -140,21 +144,42 @@ LabVIEW processes all three sensor inputs using the NI DAQ mx to adjust the fan 
   <tr>
     <td style="padding: 0;" colspan="3" align="center">
       <img src="images/interface.png" alt="Image 1" style="width: 50%; height:50%; display: block;">
-     <p align="center">Dashboard displaying real-time temperature, humidity data, and indication bulbs for system status.</p>
+     <p align="center">Dashboard displaying real-time temperature, humidity data, and indication bulbs for system status</p>
     </td>
   </tr>
   <tr>
-    <td style="padding: 0;">
+    <td style="padding: 0.1;">
      <img src="images/main vi.png" alt="Image 2" style="width: 100%; display: block;">
      <p align="center"> Main VI of the system</p>
     </td>
-    <td style="padding: 0;">
+    <td style="padding: 0.1;">
      <img src="images/power supply connection.png" alt="Image 3" style="width: 100%; display: block;">
      <p align="center"> Connection with the programmable DC supply</p>
     </td>
-    <td style="padding: 0;">
+    <td style="padding: 0.1;">
      <img src="images/fan speed regulation.png" alt="Image 4" style="width: 100%; display: block;">
      <p align="center"> Varying the speed of the fan</p>
+    </td>
+  </tr>
+</table>
+
+## Calibration
+
+The system requires calibration to ensure proper functioning. The following steps outline the calibration process:
+
+<table style="width: 100%; border-collapse: collapse;">
+  <tr>
+    <td style="padding: 0.2;">
+     <img src="images/distance callibration.png" alt="Image 2" style="width: 100%; display: block;">
+     <p align="center"> Distance Callibration</p>
+    </td>
+    <td style="padding: 0.2;">
+     <img src="images\temperature callibration.png" alt="Image 3" style="width: 100%; display: block;">
+     <p align="center">Temperature Callibration</p>
+    </td>
+    <td style="padding: 0.2;">
+     <img src="images/humidity callibration.png" alt="Image 4" style="width: 100%; display: block;">
+     <p align="center">Humidity Callibration</p>
     </td>
   </tr>
 </table>
