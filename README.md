@@ -163,9 +163,9 @@ LabVIEW processes all three sensor inputs using the NI DAQ mx to adjust the fan 
   </tr>
 </table>
 
-## Calibration
+## Callibration
 
-The system requires calibration to ensure proper functioning. The following steps outline the calibration process:
+The system requires callibration to ensure proper functioning. The following steps outline the callibration process:
 
 <table style="width: 100%; border-collapse: collapse;">
   <tr>
