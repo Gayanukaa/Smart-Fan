@@ -42,7 +42,7 @@ The block diagram below illustrates how the components of the Smart Fan system i
 
 ## Distance Estimation and Servo Control
 
-The system uses a **Mediapipe** model for face detection, and **OpenCV** for processing the video feed from the webcamera connected to the Raspberry Pi.
+The system uses a **Mediapipe** [model](https://ai.google.dev/edge/mediapipe/solutions/vision/face_detector) for face detection, and **OpenCV** for processing the video feed from the webcamera connected to the Raspberry Pi.
 
 - Face Detection: The algorithm detects faces in real-time, drawing bounding boxes around them.
 - Distance Measurement: The area of the bounding box is used to estimate the distance to the face and angles.
@@ -191,14 +191,14 @@ To explore the project, please follow these steps:
  3) Connect the hardware components as per the block diagram.
  4) Run the LabVIEW interface to start the fan and monitor its operations.
 
-## Contributing🤝
+## Contributing
 We welcome contributions from individuals and teams interested in further developing this project. Potential areas include:
  - Improving face detection algorithms for better accuracy and speed.
  - Enhancing the PWM control for more precise fan speed adjustments.
  - Integrating additional sensors for expanded environmental monitoring.
  - Sharing insights and feedback through discussions and pull requests.
 
-## License📄
+## License
 This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/), allowing for open-source collaboration and modification. We encourage community involvement and hope this platform sparks further innovation in smart home appliances.
 
 
